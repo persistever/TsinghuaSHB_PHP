@@ -7,7 +7,7 @@ header('Content-Type:application/json; charset=utf-8;');
 @$userIconPath = $_GET['userIconPath'];
 @$useServer = $_GET['useServer'];
 $userRegisterDate = date("Y-m-d");
-$userRegisterTime = date("h-i-s-a");
+$userRegisterTime = date("H:i:s");
 $haveRegister = NULL;
 $data = NULL;
 

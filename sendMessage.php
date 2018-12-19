@@ -7,7 +7,7 @@ header('Content-Type:application/json; charset=utf-8;');
 @$messageInput=$_GET['messageInput'];
 
 $data = array();
-$messageSendTime = date("Y-m-d-h-i-s-a");
+$messageSendTime = date("Y-m-d H:i:s");
 $tableName = "tb_msg_".$messageSendUserID;
 
 header('Content-Type:text/html charset=utf-8;');

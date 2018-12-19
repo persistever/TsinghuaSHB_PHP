@@ -5,7 +5,7 @@ header('Content-Type:application/json; charset=utf-8;');
 @$price = $_POST['price'];
 @$courseName = $_POST['courseName'];
 @$useServer = $_POST['useServer'];
-@$date=date("Y-m-d-h-i-s-a");
+@$date=date("Y-m-d-H-i-s");
 
 if($useServer){
     $dataBasePath = "C:\HwsNginxMaster\wwwroot\TsinghuaSHB\Pictures\\";

@@ -6,7 +6,7 @@ header('Content-Type:application/json; charset=utf-8;');
 @$itemUserID = $_POST['itemUserID'];
 @$itemPictureNO = $_POST['itemPictureNO'];
 @$num = $_POST['num'];
-@$itemPublishTime = date("Y-m-d-h-i-s-a");
+@$itemPublishTime = date("Y-m-d-H-i-s");
 $data = NULL;
 
 $itemUserID = 2;

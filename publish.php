@@ -21,7 +21,7 @@ $data=NULL;
 
 $itemPrice = intval($itemPrice);
 
-@$itemPublishTime=date("Y-m-d-h-i-s-a");
+@$itemPublishTime=date("Y-m-d-H-i-s");
 $itemShortInfo=NULL;
 $subjectList=array("理科", "工科", "文科", "其它");
 $itemSubject=$subjectList[$itemSubject];
