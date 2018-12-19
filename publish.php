@@ -27,7 +27,7 @@ $subjectList=array("理科", "工科", "文科", "其它");
 $itemSubject=$subjectList[$itemSubject];
 
 
-$isClass=array("课程","非课程");
+$isClass=array("非课程","课程");
 $itemSortIsClass=$isClass[$itemSortIsClass];
 if(strcmp($itemSortIsClass,"课程")==0){
     $itemSortList=array("课本","讲义","作业","参考书","其他");
