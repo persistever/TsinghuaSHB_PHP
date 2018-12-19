@@ -4,7 +4,9 @@ header('Content-Type:application/json; charset=utf-8;');
 @$userOpenID = $_GET['userOpenID'];
 @$userNickName = $_GET['userNickName'];
 @$useServer = $_GET['useServer'];
-$data = NULL;
+@$userIconPath = $_GET['userIconPath'];
+
+$data = array();
 $haveRegister = NULL;
 
 header('Content-Type:text/html charset=utf-8;');
@@ -23,15 +25,11 @@ $take = mysql_fetch_array($result);
 
 if($take){
     $haveRegister=true;
-    $userEmail=$take['userEmail'];
-    $userID=$take['userID'];
-    if (!strcmp($userNickName,$take['userNickName']))
-    {
-        $sql="update tb_user set userNickName='".$userNickName."' where userID=$userID";
-        mysql_query($sql,$myLink);
-    }
-    $data['userEmail'] = $userEmail;
-    $data['userID'] = intVal($userID);
+    $data['userEmail'] =$take['userEmail'];
+    $data['userID'] =intval($take['userID']);
+    $userID = $data['userID'];
+    $sql="update tb_user set userNickName= '$userNickName', userIconPath= '$userIconPath' where userID= $userID";
+    mysql_query($sql,$myLink);
 }
 else{
     $haveRegister=false;

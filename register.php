@@ -4,6 +4,7 @@ header('Content-Type:application/json; charset=utf-8;');
 @$userNickName = $_GET['userNickName'];
 @$userEmail = $_GET['userEmail'];
 @$userOpenID = $_GET['userOpenID'];
+@$userIconPath = $_GET['userIconPath'];
 @$useServer = $_GET['useServer'];
 $userRegisterDate = date("Y-m-d");
 $userRegisterTime = date("h-i-s-a");
@@ -21,8 +22,8 @@ else{
 mysql_select_db("db_try1",$myLink);
 
 $sql="insert into tb_user
-(userNickName,userOpenID,userEmail,userRegisterDate,userRegisterTime)
- values('$userNickName','$userOpenID','$userEmail','$userRegisterDate','$userRegisterTime')";
+(userNickName,userOpenID,userEmail,userIconPath,userRegisterDate,userRegisterTime)
+ values('$userNickName','$userOpenID','$userEmail','$userIconPath','$userRegisterDate','$userRegisterTime')";
 $result= mysql_query($sql,$myLink);
 $result!=NULL?$haveRegister = true:$haveRegister = false;
 
@@ -30,8 +31,6 @@ $sql="select * from tb_user where userEmail='$userEmail'";
 $result=mysql_query($sql,$myLink);
 $take = mysql_fetch_array($result);
 $userID=$take['userID'];
-
-
 
 $data['haveRegister']=$haveRegister;
 $data['userID']=$userID;

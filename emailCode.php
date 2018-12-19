@@ -4,6 +4,8 @@ header('Content-Type:application/json; charset=utf-8;');
 @$nickName=$_GET['nickName'];
 //header('Content-Type:text/html; charset=utf-8;');
 
+$data=array();
+
 $to = "$emailAddress";         // 邮件接收者
 //$to = "jiaxh17@mails.tsinghua.edu.cn";
 $subject = "清华二手书小程序验证码";                // 邮件标题
