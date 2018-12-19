@@ -3,7 +3,7 @@ header('Content-Type:application/json; charset=utf-8;');
 $totalIndex=$_GET['totalIndex'];
 $useServer=$_GET['useServer'];
 $serverURL=$_GET['serverURL'];
-$data = array(Null);
+$data = array();
 for($i=0;$i<$totalIndex;$i++){
     $data[$i]=array();
 }

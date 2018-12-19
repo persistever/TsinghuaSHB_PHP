@@ -17,7 +17,7 @@ header('Content-Type:application/json; charset=utf-8;');
 
 //$itemUserID = 2;
 
-$data=NULL;
+$data=array();
 
 $itemPrice = intval($itemPrice);
 
@@ -71,6 +71,9 @@ $take = mysql_fetch_array($result);
 if($take){
     $data['selectStatus']= true;
     $data['itemID']= $take['itemID'];
+    $itemID = $data['itemID'];
+    $sql="insert into tb_trade(userID,itemID,itemPublishTime) values($itemUserID,$itemID,'$itemPublishTime')";
+    mysql_query($sql,$myLink);
 }
 else{
     $data['selectStatus']= false;
