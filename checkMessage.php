@@ -22,7 +22,7 @@ else{
 
 mysql_select_db("db_message",$myLink);
 
-$sql="select * from ".$tableName." where itemID=$itemID AND messageReceiveUserID=$messageReceiveUserID AND messageSendUserID=$messageSendUserID AND messageIsRead = 0 order by messageSendTime DESC";
+$sql="select * from ".$tableName." where itemID=$itemID AND messageReceiveUserID=$messageReceiveUserID AND messageSendUserID=$messageSendUserID AND messageIsRead = 0 order by messageSendTime ASC";
 $result = mysql_query($sql, $myLink);
 
 while($take = mysql_fetch_array($result)){

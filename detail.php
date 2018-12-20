@@ -3,6 +3,7 @@ header('Content-Type:application/json; charset=utf-8;');
 @$useServer=$_GET['useServer'];
 @$serverURL=$_GET['serverURL'];
 @$itemID=$_GET['itemID'];
+@$userID=$_GET['userID'];
 
 $data = array();
 
@@ -48,6 +49,17 @@ for($i=0;$i<intval($data['itemPictureNO']);$i++){
 
 mysql_free_result($result);
 
+$sql="select * from tb_buy where itemID=$itemID AND userID=$userID";
+$result = mysql_query($sql,$myLink);
+$take = mysql_fetch_array($result);
+if($take){
+    $data['itemIsLike']=intval($take['itemIsLike']);
+}
+else{
+    $data['itemIsLike']=false;
+}
+
+mysql_free_result($result);
 header('Content-Type:application/json; charset=utf-8;');
 echo json_encode($data);
 

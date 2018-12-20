@@ -5,6 +5,7 @@ header('Content-Type:application/json; charset=utf-8;');
 @$messageReceiveUserID=$_GET['messageReceiveUserID'];
 @$messageSendUserID=$_GET['messageSendUserID'];
 @$messageInput=$_GET['messageInput'];
+@$messageName=$_GET['messageName'];
 
 $data = array();
 $messageSendTime = date("Y-m-d H:i:s");
@@ -30,12 +31,13 @@ $sql="CREATE TABLE IF NOT EXISTS ".$tableName."(
    messageSendUserID INT(10) UNSIGNED,
    messageInput VARCHAR(200),
    messageIsRead TINYINT(1),
+   messageName VARCHAR(100),
    messageSendTime VARCHAR(50))";
 
 $result = mysql_query($sql, $myLink);
 
 
-$sql="insert into ".$tableName."(itemID,messageReceiveUserID,messageSendUserID,messageInput,messageIsRead,messageSendTime) values($itemID, $messageReceiveUserID, $messageSendUserID,'$messageInput', 1 , '$messageSendTime')";
+$sql="insert into ".$tableName."(itemID,messageReceiveUserID,messageSendUserID,messageInput,messageIsRead,messageName,messageSendTime) values($itemID, $messageReceiveUserID, $messageSendUserID,'$messageInput', 1 ,'$messageName','$messageSendTime')";
 $result = mysql_query($sql, $myLink);
 
 //$sql = "update tb_searchhot set searchHotKeyNO=$num where searchHotKeyName='$tempKey'";
@@ -59,11 +61,13 @@ $sql="CREATE TABLE IF NOT EXISTS ".$tableName."(
    messageSendUserID INT(10) UNSIGNED,
    messageInput VARCHAR(200),
    messageIsRead TINYINT(1),
+   messageName VARCHAR(100),
    messageSendTime VARCHAR(50))";
 
 $result = mysql_query($sql, $myLink);
 
-$sql="insert into ".$tableName."(itemID,messageReceiveUserID,messageSendUserID,messageInput,messageIsRead,messageSendTime) values($itemID, $messageReceiveUserID, $messageSendUserID ,'$messageInput', 0 , '$messageSendTime')";
+$messageName = "msg_".$itemID."_".$messageSendUserID;
+$sql="insert into ".$tableName."(itemID,messageReceiveUserID,messageSendUserID,messageInput,messageIsRead,messageName,messageSendTime) values($itemID, $messageReceiveUserID, $messageSendUserID ,'$messageInput', 0 , '$messageName','$messageSendTime')";
 $result = mysql_query($sql, $myLink);
 
 mysql_free_result($result);

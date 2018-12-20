@@ -19,7 +19,8 @@ else{
 
 mysql_select_db("db_message",$myLink);
 
-$sql="select * from ".$tableName." group by itemID,messageReceiveUserID,messageSendUserID order by messageSendTime DESC";
+//$sql="select * from ".$tableName." group by itemID,messageName order by messageSendTime DESC";
+$sql="select * from ".$tableName." a where a.messageSendTime in (SELECT max(messageSendTime) from ".$tableName." group by itemID,messageName ) order by messageSendTime DESC";
 
 $result = mysql_query($sql, $myLink);
 
