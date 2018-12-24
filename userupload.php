@@ -34,6 +34,7 @@ while($take = mysql_fetch_array($result)){
     $tempData['itemIsPublished']=$take['itemIsPublished'];
     $tempData['itemPublishTime']=$take['itemPublishTime'];
     $tempData['itemSoldTime']=$take['itemSoldTime'];
+    $tempData['itemIsDelete']=$take['itemIsDelete'];
     
     $sql = "select * from tb_item where itemID=$itemID";
     $result2 = mysql_query($sql,$myLink);

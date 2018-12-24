@@ -6,15 +6,8 @@ header('Content-Type:application/json; charset=utf-8;');
 
 $data = array();
 
+$myLink = ConnectDataBase($useServer);
 header('Content-Type:text/html charset=utf-8;');
-
-if($useServer){
-    $myLink = mysql_pconnect("localhost","root","TsinghuaSHB")or die("failed".mysql_error());
-    
-}
-else{
-    $myLink = mysql_pconnect("localhost","root","TsinghuaSHB")or die("failed".mysql_error());
-}
 
 $serverPath=$serverURL.'Pictures/';
 mysql_select_db("db_try1",$myLink);
@@ -28,7 +21,6 @@ while($take = mysql_fetch_array($result)){
     $itemID = intval($take['itemID']);
     $tempData['itemUserID'] = intval($take['itemUserID']);
     $tempData['itemIsBuy'] = intval($take['itemIsBuy']);
-    $tempData['itemIsSold']=$take['itemIsSold'];
     $tempData['itemIsSoldChecked']=$serverPath.$take['itemIsSoldChecked'];
     $tempData['itemBuyTime']=$take['itemBuyTime'];
     $tempData['itemServerCheckTime']=$take['itemServerCheckTime'];
@@ -36,13 +28,20 @@ while($take = mysql_fetch_array($result)){
     $sql = "select * from tb_item where itemID=$itemID";
     $result2 = mysql_query($sql,$myLink);
     $take2 = mysql_fetch_array($result2);
-    $tempData['itemPrice']=$take2['itemPrice'];
+    $tempData['itemPrice']=intval($take2['itemPrice']);
     $tempData['itemName']=$take2['itemName'];
     $tempData['itemCoverPath']=$serverPath.$take2['itemPicturePath0'];
     $tempData['itemShortInfo']=$take2['itemShortInfo'];
-    
     mysql_free_result($result2);
     
+    $sql = "select * from tb_trade where itemID=$itemID";
+    $result2 = mysql_query($sql,$myLink);
+    $take2 = mysql_fetch_array($result2);
+    $tempData['itemIsSold']=intval($take2['itemIsSold']);
+    $tempData['itemIsPublished']=intval($take2['itemIsPublished']);
+    $tempData['itemIsDelete']=intval($take2['itemIsDelete']);
+    
+    mysql_free_result($result2);
     array_push($data,$tempData);
 }
 
