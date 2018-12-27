@@ -1,8 +1,11 @@
 <?php
+
 header('Content-Type:application/json; charset=utf-8;');
 @$useServer=$_GET['useServer'];
 @$serverURL=$_GET['serverURL'];
 @$userID=$_GET['userID'];
+
+include "ConnectDataBase.php";
 
 $data = array();
 

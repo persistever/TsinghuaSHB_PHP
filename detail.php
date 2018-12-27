@@ -20,7 +20,6 @@ mysql_select_db("db_try1",$myLink);
 $result = mysql_query("select * from tb_item where itemID=$itemID",$myLink);
 $take = mysql_fetch_array($result);
 
-
 $data['itemID']=intval($take['itemID']);
 $data['itemUserID']=intval($take['itemUserID']);
 $data['itemName']=$take['itemName'];
@@ -54,10 +53,19 @@ $result = mysql_query($sql,$myLink);
 $take = mysql_fetch_array($result);
 if($take){
     $data['itemIsLike']=intval($take['itemIsLike']);
+    $data['itemIsBuy']=intval($take['itemIsBuy']);
 }
 else{
     $data['itemIsLike']=false;
+    $data['itemIsBuy']=false;
 }
+
+$sql="select * from tb_trade where itemID=$itemID";
+$result = mysql_query($sql,$myLink);
+$take = mysql_fetch_array($result);
+$data['itemIsSold'] = intval($take['itemIsSold']);
+$data['itemIsPublished'] = intval($take['itemIsPublished']);
+$data['itemIsDelete'] = intval($take['itemIsDelete']);
 
 mysql_free_result($result);
 header('Content-Type:application/json; charset=utf-8;');

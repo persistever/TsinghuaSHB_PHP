@@ -8,7 +8,6 @@ header('Content-Type:application/json; charset=utf-8;');
 $data = array();
 $itemUserID = null;
 $itemIsSoldChecked = null;
-$itemIsSold = null;
 $itemServerCheckTime =null;
 
 header('Content-Type:text/html charset=utf-8;');
@@ -25,7 +24,6 @@ $result = mysql_query($sql,$myLink);
 $take = mysql_fetch_array($result);
 
 $itemUserID = intval($take['userID']);
-$itemIsSold = intval($take['itemIsSold']);
 $itemIsSoldChecked = intval($take['itemIsSoldChecked']);
 $itemServerCheckTime = $take['itemServerCheckTime'];
 
@@ -46,7 +44,7 @@ if($take){
 }
 else{
     $itemIsLike = 1;
-    $sql = "insert into tb_buy(userID,itemID,itemUserID,itemIsLike,itemIsSoldChecked,itemIsSold,itemServerCheckTime) values($userID,$itemID,$itemUserID, $itemIsLike ,$itemIsSoldChecked,$itemIsSold,'$itemServerCheckTime')";
+    $sql = "insert into tb_buy(userID,itemID,itemUserID,itemIsLike,itemIsSoldChecked,itemServerCheckTime) values($userID,$itemID,$itemUserID, $itemIsLike ,$itemIsSoldChecked,'$itemServerCheckTime')";
     $result1 = mysql_query($sql,$myLink);
     if($result1){
         $itemIsLike = 1;
