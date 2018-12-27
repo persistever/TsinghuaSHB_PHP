@@ -42,10 +42,19 @@ while($take = mysql_fetch_array($result)){
     $tempData['itemPrice']=$take['itemPrice'];
     $tempData['itemShortInfo']=$take['itemShortInfo'];
     $tempData['itemID']=$take['itemID'];
-    array_push($data[$index],$tempData);
     
-    $randTemp=rand(0,1);
-    if($randTemp==1) array_push($data[0],$tempData);
+    $tempItemID = intval($take['itemID']);
+    $sql = "select * from tb_trade where itemID=$tempItemID";
+    $result1 = mysql_query($sql,$myLink);
+    $take1 = mysql_fetch_array($result1);
+    
+    if(intval($take1['itemIsSold'])==0 && intval($take1['itemIsPublished'])==1 &&  intval($take1['itemIsDelete'])==0){
+        array_push($data[$index],$tempData);
+        
+        $randTemp=rand(0,1);
+        if($randTemp==1) array_push($data[0],$tempData);
+    }
+    mysql_free_result($result1);
 }
 
 mysql_free_result($result);

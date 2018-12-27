@@ -20,15 +20,15 @@ switch($status){
         $sql = "update tb_trade set itemIsPublished=1 where userID=$userID AND itemID=$itemID";
         $result = mysql_query($sql,$myLink);
         break;
+//     case 0:
+//         $sql = "update tb_trade set itemIsSold=1 where userID=$userID AND itemID=$itemID";
+//         $result = mysql_query($sql,$myLink);
+//         break;
     case 0:
-        $sql = "update tb_trade set itemIsSold=1 where userID=$userID AND itemID=$itemID";
-        $result = mysql_query($sql,$myLink);
-        break;
-    case 1:
         $sql = "update tb_trade set itemIsDelete=1 where userID=$userID AND itemID=$itemID";
         $result = mysql_query($sql,$myLink);
         break;
-    case 2:
+    case 1:
         $sql = "update tb_trade set itemIsPublished=0 where userID=$userID AND itemID=$itemID";
         $result = mysql_query($sql,$myLink);
         break;
