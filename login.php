@@ -27,6 +27,7 @@ if($take){
     $haveRegister=true;
     $data['userEmail'] =$take['userEmail'];
     $data['userID'] =intval($take['userID']);
+    $data['userIsBlocked']=intval($take['userIsBlocked']);
     $userID = $data['userID'];
     $sql="update tb_user set userNickName= '$userNickName', userIconPath= '$userIconPath' where userID= $userID";
     mysql_query($sql,$myLink);

@@ -4,6 +4,7 @@ header('Content-Type:application/json; charset=utf-8;');
 @$useServer=$_GET['useServer'];
 @$serverURL=$_GET['serverURL'];
 @$searchInput=$_GET['searchInput'];
+@$searchSort=intval($_GET['searchSort']);
 
 $data=array();
 $haveSearchResult=0;
@@ -40,16 +41,25 @@ mysql_select_db("db_try1",$myLink);
 
 
 $combineSQL="CONCAT(itemName,itemSort,itemCourseName,itemCourseNO,itemCourseTeacher)";
-$searchKeys = implode("%' AND $combineSQL like '%",$searchKeys);
-$searchKeys= "where ".$combineSQL." like '%".$searchKeys."%'";
+$searchKeys = implode("%' AND $combineSQL like '%",$searchKeys);  //将数组元素合成字符串
+$searchKeys= "where ".$combineSQL." like '%".$searchKeys."%'";  //拼接搜索条件
 
-// $sql = "select * from db_item where itemSearchString exprep '$searchKeys' order by itemPublishTime";
-$sql = "select * from tb_item ".$searchKeys;
-//$sql = "select * from tb_item where itemName is '系统学'";
-//$sql = "select * from tb_item";
-
-
-//$data['sql']=$sql;
+$searchOrder="";
+switch($searchSort){
+    case 0:
+        $searchOrder=" order by itemPublishTime DESC";
+        break;
+    case 1:
+        $searchOrder=" order by itemPublishTime ASC";
+        break;
+    case 2:
+        $searchOrder=" order by itemPrice ASC";
+        break;
+    case 3:
+        $searchOrder=" order by itemPrice DESC";
+        break;
+}
+$sql = "select * from tb_item ".$searchKeys.$searchOrder;
 $result = mysql_query($sql, $myLink);
 
 // if($take){
@@ -70,7 +80,15 @@ while($take = mysql_fetch_array($result)){
     $tempData['itemPrice']=$take['itemPrice'];
     $tempData['itemShortInfo']=$take['itemShortInfo'];
     $tempData['itemID']=$take['itemID'];
-    array_push($data,$tempData);
+    
+    $tempItemID = intval($take['itemID']);
+    $sql = "select * from tb_trade where itemID=$tempItemID";
+    $result1 = mysql_query($sql,$myLink);
+    $take1 = mysql_fetch_array($result1);
+    if(intval($take1['itemIsSold'])==0 && intval($take1['itemIsPublished'])==1 &&  intval($take1['itemIsDelete'])==0){
+        array_push($data,$tempData);
+    }
+    mysql_free_result($result1);
 }
 
 mysql_free_result($result);
