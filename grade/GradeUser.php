@@ -28,7 +28,7 @@ if($grade<0){
     $grade=100;
 }
 
-if($grade<60){
+if($grade<=60){
     $sql="update tb_user set userIsBlocked=1 where userID=$userID";
     $result = mysql_query($sql,$myLink);
     mysql_free_result($result);
