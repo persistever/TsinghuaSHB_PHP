@@ -2,6 +2,7 @@
 
 function curl_get_https($url)
 {
+    header('Content-Type:application/json; charset=utf-8;');
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_URL, $url);
     curl_setopt($curl, CURLOPT_HEADER, 0);

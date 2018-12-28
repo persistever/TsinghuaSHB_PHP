@@ -7,7 +7,7 @@ header('Content-Type:application/json; charset=utf-8;');
 $data = NULL;
 
 if($useServer){
-    $dataBasePath = "C:\HwsNginxMaster\wwwroot\TsinghuaSHB\Pictures\\";
+    $dataBasePath = "C:\HwsNginxMaster\wwwroot\TsinghuaSHB\TestPictures\\";
 }
 else{
     $dataBasePath = "D:\Project\PHP\TsinghuaSHB\Pictures\\";

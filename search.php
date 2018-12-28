@@ -58,6 +58,9 @@ switch($searchSort){
     case 3:
         $searchOrder=" order by itemPrice DESC";
         break;
+    default:
+        $searchOrder=" order by itemPublishTime DESC";
+        break;
 }
 $sql = "select * from tb_item ".$searchKeys.$searchOrder;
 $result = mysql_query($sql, $myLink);
@@ -111,6 +114,7 @@ if($haveSearchResult){
     }
 }
 
+mysql_free_result($result);
 header('Content-Type:application/json; charset=utf-8;');
 echo json_encode($data);
 
