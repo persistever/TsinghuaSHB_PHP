@@ -1,20 +1,26 @@
 <?php
-
 header('Content-Type:application/json; charset=utf-8;');
 @$useServer=$_GET['useServer'];
 @$serverURL=$_GET['serverURL'];
 @$userID=$_GET['userID'];
 
+/*
+ *@php 获取用户收藏记录列表
+ *@$_GET 接收的数据
+ *@var array $data 回传的数据
+ */
+
 include "ConnectDataBase.php";
 
 $data = array();
-
+//连接和选择数据库
 $myLink = ConnectDataBase($useServer);
 header('Content-Type:text/html charset=utf-8;');
 
 $serverPath=$serverURL.'Pictures/';
 mysql_select_db("db_try1",$myLink);
 
+//查找对应用户已经收藏的记录，同时返回该商品的部分信息和出售发布状态
 $sql = "select * from tb_buy where userID=$userID AND itemIsLike=1";
 $result = mysql_query($sql,$myLink);
 while($take = mysql_fetch_array($result)){

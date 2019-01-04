@@ -1,14 +1,19 @@
 <?php
-
 header('Content-Type:application/json; charset=utf-8;');
 @$useServer=$_GET['useServer'];
 @$serverURL=$_GET['serverURL'];
 @$searchInput=$_GET['searchInput'];
 @$searchSort=intval($_GET['searchSort']);
 
+/*
+ *@php 搜索功能
+ *@$_GET 接收的数据
+ *@var array $data 回传的数据，返回搜索结果列表
+ */
 $data=array();
 $haveSearchResult=0;
 
+//$char为要过滤的中文符号
 $char = "。、！？：；﹑•＂…‘’“”〝〞∕¦‖—　〈〉﹞﹝「」‹›〖〗】【»«』『〕〔》《﹐¸﹕︰﹔！¡？¿﹖﹌﹏﹋＇´ˊˋ―﹫︳︴¯＿￣﹢﹦﹤‐­˜﹟﹩﹠﹪﹡﹨﹍﹉﹎﹊ˇ︵︶︷︸︹︿﹀︺︽︾ˉ﹁﹂﹃﹄︻︼（）";
 
 $pattern = array(
@@ -25,8 +30,7 @@ $searchKeys=split('[  ]',$searchKeys); //按照中英文空格断开
 $searchKeys=array_merge(array_diff($searchKeys,[' '," ",''])); //断开之后如果还有空格，消去，也消去空字符
 $searchKeysBackup = $searchKeys;
 
-//$data['searchkeys']=$searchKeys;
-
+//连接和选择数据库
 header('Content-Type:text/html charset=utf-8;');
 
 if($useServer){
@@ -44,6 +48,7 @@ $combineSQL="CONCAT(itemName,itemSort,itemCourseName,itemCourseNO,itemCourseTeac
 $searchKeys = implode("%' AND $combineSQL like '%",$searchKeys);  //将数组元素合成字符串
 $searchKeys= "where ".$combineSQL." like '%".$searchKeys."%'";  //拼接搜索条件
 
+//排序方式选择
 $searchOrder="";
 switch($searchSort){
     case 0:
@@ -64,14 +69,6 @@ switch($searchSort){
 }
 $sql = "select * from tb_item ".$searchKeys.$searchOrder;
 $result = mysql_query($sql, $myLink);
-
-// if($take){
-//     $data['search status']=true;
-// }
-// else{
-//     $data['search status']=false;
-// }
-
 
 $serverPath=$serverURL.'Pictures/';
 
@@ -95,7 +92,7 @@ while($take = mysql_fetch_array($result)){
 }
 
 mysql_free_result($result);
-
+//同时需要根据用户输入的关键字信息更新搜索热词列表
 if($haveSearchResult){
     foreach($searchKeysBackup as $tempKey){
         $sql = "select * from tb_searchhot where searchHotKeyName='$tempKey'";

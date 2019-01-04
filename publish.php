@@ -1,6 +1,5 @@
 <?php
 header('Content-Type:application/json; charset=utf-8;');
-
 @$itemName = $_GET['itemName'];
 @$itemPrice = $_GET['itemPrice'];
 @$itemSubject = $_GET['itemSubject'];
@@ -15,7 +14,11 @@ header('Content-Type:application/json; charset=utf-8;');
 @$itemUserID = $_GET['itemUserID'];
 @$useServer = $_GET['useServer'];
 
-//$itemUserID = 2;
+/*
+ *@php 书籍发布
+ *@$_GET 接收的数据
+ *@var array $data 回传的数据，返回发布是否成功的状态
+ */
 
 $data=array();
 
@@ -26,7 +29,7 @@ $itemShortInfo=NULL;
 $subjectList=array("理科", "工科", "文科", "其它");
 $itemSubject=$subjectList[$itemSubject];
 
-
+//需要对课程资料和非课程资料做不同的处理
 $isClass=array("非课程","课程");
 $itemSortIsClass=$isClass[$itemSortIsClass];
 if(strcmp($itemSortIsClass,"课程")==0){
@@ -39,7 +42,7 @@ else{
     $itemSort=$itemSortList[$itemSort];
     $itemShortInfo=$itemCourseName." ".$itemCourseTeacher." ".$itemSort;
 }
-
+//连接和选择数据库
 header('Content-Type:text/html; charset=utf-8;');
 if($useServer){
     $myLink = mysql_pconnect("localhost","root","TsinghuaSHB")or die("failed".mysql_error());
@@ -49,6 +52,7 @@ else{
 }
 mysql_select_db("db_try1",$myLink);
 
+//插入上传记录
 $result=mysql_query("insert into tb_item(
 itemName,itemUserID,itemPrice,itemShortInfo,itemSubject,
 itemSortIsClass,itemSort,itemInfo,itemPublisher,itemPublishVersion,

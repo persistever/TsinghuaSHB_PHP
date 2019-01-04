@@ -1,13 +1,21 @@
 <?php
 header('Content-Type:application/json; charset=utf-8;');
-$totalIndex=$_GET['totalIndex'];
-$useServer=$_GET['useServer'];
-$serverURL=$_GET['serverURL'];
+@$totalIndex=$_GET['totalIndex'];
+@$useServer=$_GET['useServer'];
+@$serverURL=$_GET['serverURL'];
+
+/*
+ *@php 首页信息获取
+ *@$_GET 接受的数据
+ *@var array $data 回传的数据，是一个书籍资料的列表
+ */
+
 $data = array();
 for($i=0;$i<$totalIndex;$i++){
     $data[$i]=array();
 }
 
+//连接和选择数据库
 header('Content-Type:text/html charset=utf-8;');
 
 if($useServer){
@@ -18,13 +26,13 @@ else{
     $myLink = mysql_pconnect("localhost","root","TsinghuaSHB")or die("failed".mysql_error());
 }
 
+//需要根据实际后台图片位置返回图片路径
 $serverPath=$serverURL.'Pictures/';
 mysql_select_db("db_try1",$myLink);
 $result = mysql_query("select * from tb_item");
 if($result){
     $data['fetch data']='success';
-}
-else{
+} else {
     $data['fetch data']='fail';
 }
 
@@ -36,7 +44,7 @@ while($take = mysql_fetch_array($result)){
     elseif(strcmp($take['itemSubject'],"工科")==0){$index=2;}
     elseif(strcmp($take['itemSubject'],"文科")==0){$index=3;}
     elseif(strcmp($take['itemSubject'],"其它")==0){$index=4;}
-    //$index=0;
+    //$index=0 表示推荐;
     $tempData['itemName']=$take['itemName'];
     $tempData['itemCoverPath']=$serverPath.$take['itemPicturePath0'];
     $tempData['itemPrice']=$take['itemPrice'];

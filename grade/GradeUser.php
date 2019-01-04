@@ -6,14 +6,22 @@ header('Content-Type:application/json; charset=utf-8;');
 @$itemID=intval($_GET['itemID']);
 @$sellOrBuy=intval($_GET['sellOrBuy']);
 
+/*
+ *@php 对用户打分
+ *@$_GET 接受的数据
+ *@var array $data 回传的数据
+ */
+
 include "../ConnectDataBase.php";
 
 $deltaGrade = 0;
 
+//连接和选择数据库
 $myLink = ConnectDataBase($useServer);
 header('Content-Type:text/html charset=utf-8;');
 mysql_select_db("db_try1",$myLink);
 
+//$deltaGrade是在原来系统的评分上的改变量，以80.0分为基准，除以4.0得到改变量
 $deltaGrade = intval(($grade*1.0-80.0)/4.0);
 
 $sql="select * from tb_user where userID=$userID";

@@ -5,8 +5,13 @@ header('Content-Type:application/json; charset=utf-8;');
 @$itemID=$_GET['itemID'];
 @$userID=$_GET['userID'];
 
+/*
+ *@php 获取书籍详细信息
+ *@$_GET 接受的数据
+ *@var array $data 回传的数据，返回一个信息数组
+ */
 $data = array();
-
+//连接和选择数据库
 header('Content-Type:text/html charset=utf-8;');
 if($useServer){
     $myLink = mysql_pconnect("localhost","root","TsinghuaSHB")or die("failed".mysql_error());
@@ -15,6 +20,7 @@ else{
     $myLink = mysql_pconnect("localhost","root","TsinghuaSHB")or die("failed".mysql_error());
 }
 
+//返回的图片在网络上的目录地址
 $serverPath=$serverURL.'Pictures/';
 mysql_select_db("db_try1",$myLink);
 $result = mysql_query("select * from tb_item where itemID=$itemID",$myLink);
@@ -48,6 +54,7 @@ for($i=0;$i<intval($data['itemPictureNO']);$i++){
 
 mysql_free_result($result);
 
+//还需要获取该用户是否收藏了该书籍资料的信息
 $sql="select * from tb_buy where itemID=$itemID AND userID=$userID";
 $result = mysql_query($sql,$myLink);
 $take = mysql_fetch_array($result);
@@ -60,6 +67,7 @@ else{
     $data['itemIsBuy']=false;
 }
 
+//返回该书籍的出售和发布状态
 $sql="select * from tb_trade where itemID=$itemID";
 $result = mysql_query($sql,$myLink);
 $take = mysql_fetch_array($result);

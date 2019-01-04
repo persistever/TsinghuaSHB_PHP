@@ -1,5 +1,8 @@
 <?php
 
+/*
+ *@php 连接数据库的公用脚本
+ */
 function ConnectDataBase($useServer){
 
     if($useServer){

@@ -1,5 +1,7 @@
 <?php
-
+/*
+ *@php 访问其他https网站获取数据的脚本
+ */
 function curl_get_https($url)
 {
     header('Content-Type:application/json; charset=utf-8;');

@@ -2,8 +2,14 @@
 header('Content-Type:application/json; charset=utf-8;');
 @$useServer=$_GET['useServer'];
 
+/*
+ *@php 获取搜索热词
+ *@$_GET 接收的数据
+ *@var array $data 回传的数据，返回搜索热词列表
+ */
 $data=array();
 
+//连接和选择数据库
 header('Content-Type:text/html charset=utf-8;');
 
 if($useServer){
@@ -16,17 +22,9 @@ else{
 
 mysql_select_db("db_try1",$myLink);
 
-//$sql="select * from tb_searchhot";
+//从热词列表中按照搜索次数查询前六条记录
 $sql="select * from tb_searchhot order by searchHotKeyNO DESC LIMIT 6";
 $result = mysql_query($sql, $myLink);
-// $take = mysql_fetch_array($result);
-// if($take)
-// {
-//     $data['states']='success';
-// }
-// else{
-//     $data['states']='fail';
-// }
 
 while($take = mysql_fetch_array($result)){
     $tempData=$take['searchHotKeyName'];

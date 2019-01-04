@@ -1,6 +1,5 @@
 <?php
 header('Content-Type:application/json; charset=utf-8;');
-
 @$useServer = $_POST['useServer'];
 @$itemID = $_POST['itemID'];
 @$itemUserID = $_POST['itemUserID'];
@@ -8,6 +7,12 @@ header('Content-Type:application/json; charset=utf-8;');
 @$num = $_POST['num'];
 @$itemPublishTime = date("Y-m-d-H-i-s");
 $data = NULL;
+
+/*
+ *@php 上传多张照片的脚本
+ *@$_GET 接收的数据
+ *@var array $data 回传的数据，返回上传是否成功的状态
+ */
 
 $itemUserID = 2;
 $itemID=intval($itemID);

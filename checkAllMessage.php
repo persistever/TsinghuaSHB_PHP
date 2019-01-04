@@ -3,11 +3,18 @@ header('Content-Type:application/json; charset=utf-8;');
 @$useServer=$_GET['useServer'];
 @$messageUserID=$_GET['messageUserID'];
 
+/*
+ *@php 获取用户的消息列表
+ *@$_GET 接受的数据
+ *@var array $data 回传的数据，是一个消息列表
+ */
 
 $data = array();
 
+//数据表的名称为tb_msg_加上用户的ID
 $tableName = "tb_msg_".$messageUserID;
 
+//连接和选择数据库
 header('Content-Type:text/html charset=utf-8;');
 
 if($useServer){
@@ -19,7 +26,7 @@ else{
 
 mysql_select_db("db_message",$myLink);
 
-//$sql="select * from ".$tableName." group by itemID,messageName order by messageSendTime DESC";
+//从消息中选择不同其他用户发送的最新消息，组成列表
 $sql="select * from ".$tableName." a where a.messageSendTime in (SELECT max(messageSendTime) from ".$tableName." group by itemID,messageName ) order by messageSendTime DESC";
 
 $result = mysql_query($sql, $myLink);
@@ -27,10 +34,10 @@ $result = mysql_query($sql, $myLink);
 while($take = mysql_fetch_array($result)){
     $tempData = array();
     $tempData['itemID']=intVal($take['itemID']);
+    //需要判断消息的发送接收方向
     if(intVal($take['messageReceiveUserID'])==intVal($messageUserID)){
         $tempData['messageTheOtherUserID']=intVal($take['messageSendUserID']);  
-    }
-    else{
+    } else {
         $tempData['messageTheOtherUserID']=intVal($take['messageReceiveUserID']);
     }
     
@@ -38,6 +45,7 @@ while($take = mysql_fetch_array($result)){
     $tempData['messageSendTime']=$take['messageSendTime'];
     $tempData['messageIsRead']=$take['messageIsRead'];
     
+    //返回的消息中需要包含用户的微信昵称和头像
     mysql_select_db("db_try1",$myLink);
     
     $sql="select userNickName,userIconPath from tb_user where userID=".$tempData['messageTheOtherUserID'];

@@ -1,5 +1,10 @@
 <?php
 //header('Content-Type:application/json; charset=utf-8;');
+
+/*
+ *@php 起初尝试用socket技术实现聊天功能，后期因为服务器wss服务配置问题未能实现
+ */
+
 set_time_limit(0);
 
 $host = "0.0.0.0";
